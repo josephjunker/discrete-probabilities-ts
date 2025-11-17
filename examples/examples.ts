@@ -1,4 +1,5 @@
 import {
+    fairChoice,
     flip,
     roll,
     chain,
@@ -121,3 +122,34 @@ function binomialDistribution(): Distribution<number> {
 const expandedBinomial = exploreToEpsilon(binomialDistribution(), 0.001);
 
 console.dir(truncate(expandedBinomial).values);
+
+const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
+const ranks = [
+    "A",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K",
+];
+
+const deck = explore(
+    null,
+    chain(fairChoice(ranks), (rank) =>
+        chain(fairChoice(suits), (suit) =>
+            result({
+                rank,
+                suit,
+            }),
+        ),
+    ),
+);
+
+show(deck);

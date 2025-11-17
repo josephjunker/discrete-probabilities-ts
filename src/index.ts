@@ -148,12 +148,22 @@ function impossible<T>(): Distribution<T> {
     return [];
 }
 
-function weightedChoices<T>(choices: Choices<T>): Distribution<T> {
+function weightedChoice<T>(choices: Choices<T>): Distribution<T> {
+    if (choices.length === 0)
+        throw new Error("Cannot take a weighted choice of nothing");
     return choices.map(([prob, value]) => Possibility.constant(prob, value));
 }
 
+function fairChoice<T>(choices: Array<T>): Distribution<T> {
+    if (choices.length === 0)
+        throw new Error("Cannot take a fair choice of nothing");
+    const share = 1 / choices.length;
+
+    return choices.map((choice) => Possibility.constant(share, choice));
+}
+
 function flip(p: number): Distribution<boolean> {
-    return weightedChoices([
+    return weightedChoice([
         [p, true],
         [1 - p, false],
     ]);
@@ -167,7 +177,7 @@ function roll(sides: number): Distribution<number> {
         choices.push([odds, i]);
     }
 
-    return weightedChoices(choices);
+    return weightedChoice(choices);
 }
 
 function chain<TIn, TOut>(
@@ -485,7 +495,8 @@ function truncate<T>(distribution: Distribution<T>): {
 }
 
 export {
-    weightedChoices,
+    weightedChoice,
+    fairChoice,
     flip,
     roll,
     impossible,
