@@ -21,7 +21,8 @@
     "test": "uvu"
   },
   "dependencies": {
-    "hamt_plus": "1.0.2"
+    "hamt_plus": "1.0.2",
+    "pure-rand": "^7.0.1"
   },
   "devDependencies": {
     "@types/hamt_plus": "1.0.0",
