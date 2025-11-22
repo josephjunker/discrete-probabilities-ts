@@ -1,6 +1,6 @@
-import { Distribution, Possibility } from "./data";
+import { type Distribution, Possibility } from "./data.mts";
 
-type Choices<T> = Array<[number, T]>;
+export type Choices<T> = Array<[number, T]>;
 
 export function weightedChoice<T>(choices: Choices<T>): Distribution<T> {
     if (choices.length === 0)

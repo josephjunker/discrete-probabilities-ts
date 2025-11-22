@@ -1,32 +1,33 @@
 {
-  "name": "discrete-probabilities",
-  "version": "1.0.0",
-  "description": "Utilities for discrete probabilistic programming",
-  "keywords": [
-    "probability",
-    "probabilistic"
-  ],
-  "private": true,
-  "license": "MIT",
-  "author": "Joseph Junker",
-  "main": "dist/cjs/index.js",
-  "module": "dist/mjs/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/mjs/index.js",
-      "require": "./dist/cjs/index.js"
+    "name": "discrete-probabilities",
+    "version": "1.0.0",
+    "description": "Utilities for discrete probabilistic programming",
+    "keywords": [
+        "probability",
+        "probabilistic"
+    ],
+    "private": true,
+    "license": "MIT",
+    "author": "Joseph Junker",
+    "main": "dist/cjs/index.js",
+    "module": "dist/mjs/index.js",
+    "exports": {
+        ".": {
+            "import": "./dist/mjs/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "scripts": {
+        "test": "uvu src test.mts"
+    },
+    "dependencies": {
+        "hamt_plus": "1.0.2",
+        "pure-rand": "^7.0.1"
+    },
+    "devDependencies": {
+        "@types/hamt_plus": "1.0.0",
+        "prettier": "3.6.2",
+        "typescript": "5.9.3",
+        "uvu": "^0.5.6"
     }
-  },
-  "scripts": {
-    "test": "uvu"
-  },
-  "dependencies": {
-    "hamt_plus": "1.0.2",
-    "pure-rand": "^7.0.1"
-  },
-  "devDependencies": {
-    "@types/hamt_plus": "1.0.0",
-    "prettier": "3.6.2",
-    "typescript": "5.9.3"
-  }
 }

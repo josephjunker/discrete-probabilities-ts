@@ -1,3 +1,4 @@
+import hamt from "hamt_plus";
 import {
     fairChoice,
     flip,
@@ -11,7 +12,11 @@ import {
     explore,
     exploreToEpsilon,
     truncate,
-} from "../src/index";
+    type HashMapConfig,
+    type WeightedValue,
+    fullyResolveSampling,
+    sample,
+} from "../src/index.mts";
 
 function show<T>(dist: Distribution<T>) {
     console.dir(fullyResolveExact(dist), {
@@ -19,7 +24,7 @@ function show<T>(dist: Distribution<T>) {
     });
 }
 
-const grassModel = chain(flip(0.3), (didRain) =>
+const grassModel: Distribution<boolean> = chain(flip(0.3), (didRain) =>
     chain(flip(0.5), (sprinklerDidRun) =>
         chain(flip(0.9), (rainCausesWetGrass) =>
             chain(flip(0.8), (sprinklerCausesWetGrass) =>
@@ -61,8 +66,29 @@ const grassModel2 = multiChain(
     },
 );
 
+function mapToTree<T>(map: HamtMap<T, number>): Array<WeightedValue<T>> {
+    const result = [] as Array<WeightedValue<T>>;
+    for (const [value, probability] of map.entries()) {
+        result.push({ probability, value });
+    }
+
+    return result;
+}
+
+/*
+console.dir(mapToTree(samplingWalkTree(1, hamt.make(), grassModel)), {
+    depth: null,
+});
+*/
+
 // show(grassModel);
 // show(grassModel2);
+/*
+console.dir(sample(grassModel, 100_000), {
+    depth: null,
+});
+*/
+// console.dir(fullyResolveSampling(grassModel, 100_000));
 
 function slipperyCoin(): Distribution<boolean> {
     let lost = flip(0.9);
@@ -108,6 +134,7 @@ function ultimateCrit() {
 }
 
 // show(ultimateCrit());
+// console.dir(fullyResolveSampling(ultimateCrit(), 100_000));
 
 function binomialDistribution(): Distribution<number> {
     function recursive(n: number): Distribution<number> {
@@ -121,7 +148,7 @@ function binomialDistribution(): Distribution<number> {
 
 const expandedBinomial = exploreToEpsilon(binomialDistribution(), 0.001);
 
-console.dir(truncate(expandedBinomial).values);
+// console.dir(truncate(expandedBinomial).values);
 
 const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
 const ranks = [
@@ -152,4 +179,54 @@ const deck = explore(
     ),
 );
 
-show(deck);
+// show(deck);
+
+type Suit = "Clubs" | "Hearts" | "Diamonds" | "Spades";
+
+type Card = {
+    rank: number;
+    suit: Suit;
+};
+
+function card(rank: number, suit: Suit): Card {
+    return { rank, suit };
+}
+
+const smallDeck = fairChoice([
+    card(2, "Hearts"),
+    card(2, "Spades"),
+    card(3, "Diamonds"),
+    card(3, "Diamonds"),
+    card(4, "Spades"),
+]);
+
+const suitToValue = {
+    Clubs: 1,
+    Hearts: 2,
+    Diamonds: 3,
+    Spades: 4,
+};
+
+function maxCard(left: Card, right: Card): Card {
+    if (left.rank > right.rank) return left;
+    if (right.rank > left.rank) return right;
+    const leftSuit = suitToValue[left.suit];
+    const rightSuit = suitToValue[right.suit];
+    if (leftSuit > rightSuit) return left;
+    if (rightSuit > leftSuit) return right;
+    return left;
+}
+
+const drawTwo = chain(smallDeck, (firstCard) =>
+    chain(smallDeck, (secondCard) => result(maxCard(firstCard, secondCard))),
+);
+
+const cardHashMapConfig: HashMapConfig<Card> = {
+    hash: ({ rank, suit }) => rank + suitToValue[suit] * 20,
+    keyEq: (left, right) =>
+        left.rank === right.rank && left.suit === right.suit,
+};
+
+console.dir(fullyResolveExact(drawTwo, cardHashMapConfig));
+
+console.dir(fullyResolveSampling(drawTwo, 100_000, cardHashMapConfig));

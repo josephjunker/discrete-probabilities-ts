@@ -33,7 +33,9 @@
         // "noFallthroughCasesInSwitch": true,
         // "noPropertyAccessFromIndexSignature": true,
 
-        "verbatimModuleSyntax": false,
+        "verbatimModuleSyntax": true,
+        "rewriteRelativeImportExtensions": true,
+        "esModuleInterop": true,
 
         // Recommended Options
         "strict": true,

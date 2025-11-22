@@ -1,4 +1,4 @@
-import { Distribution, HashMapConfig, Possibility } from "./data";
+import { type Distribution, type HashMapConfig, Possibility } from "./data.mts";
 import * as hamt from "hamt_plus";
 
 export function shallowNormalize<T>(
@@ -75,7 +75,6 @@ function randomSelector<T>(tree: Array<[number, T]>): RandomSelectionResult<T> {
     const totalProb = tree.reduce((acc, [prob]) => acc + prob, 0);
 
     const chosenIndex = Math.random() * totalProb;
-    // const chosenIndex = seededRandom() * totalProb;
     let cumulativeProb = 0;
 
     for (const node of tree) {
@@ -95,7 +94,7 @@ type ExpandLevelResult<T> = {
     nestedChoices: NestedChoices<T>;
 };
 
-function expandLevel<T>(
+export function expandLevel<T>(
     probabilityScale: number,
     samples: HamtMap<T, number>,
     choices: Distribution<T>,
@@ -140,7 +139,7 @@ function expandLevel<T>(
     return { samples, nestedChoices };
 }
 
-function samplingWalkTree<T>(
+export function samplingWalkTree<T>(
     pcontrib: number,
     samples: HamtMap<T, number>,
     choices: Distribution<T>,
