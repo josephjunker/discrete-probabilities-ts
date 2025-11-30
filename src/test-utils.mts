@@ -60,6 +60,11 @@ export function probabilityMapsApproximatelyEqual<T>(
 
 export function valuesApproximatelyEqual(n1: number, n2: number): boolean {
     const smallerNumber = Math.min(n1, n2);
+    if (smallerNumber === 0) {
+        const largerNumber = Math.max(n1, n2);
+        return largerNumber < 0.001 && largerNumber > -0.001;
+    }
+
     const epsilon = smallerNumber * 0.001;
     const min = smallerNumber - epsilon;
     const max = smallerNumber + epsilon;
