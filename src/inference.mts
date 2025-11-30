@@ -1,11 +1,5 @@
-import {
-    type Distribution,
-    type HashMapConfig,
-    Possibility,
-    type WeightedValue,
-} from "./data.mts";
-import * as hamt from "hamt_plus";
-import { shallowNormalize } from "./utils.mts";
+import { type Distribution, type HashMapConfig, Possibility } from "./data.mts";
+import hamt from "hamt_plus";
 
 export function explore<T>(
     maxDepth: number | null,
@@ -46,22 +40,4 @@ export function explore<T>(
     }
 
     return suspensions;
-}
-
-export function fullyResolveExact<T>(
-    distribution: Distribution<T>,
-    hashMapConfig?: HashMapConfig<T>,
-): Array<WeightedValue<T>> {
-    const flattened = shallowNormalize(
-        explore(null, distribution, hashMapConfig),
-    );
-    return flattened.map((possibility) =>
-        possibility.match({
-            constant: (probability, value) => ({ probability, value }),
-            thunk: () => {
-                // Cannot happen, because we pass `null` to `explore` above
-                throw new Error("TILT");
-            },
-        }),
-    );
 }

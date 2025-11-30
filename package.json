@@ -18,7 +18,8 @@
         }
     },
     "scripts": {
-        "test": "uvu src test.mts"
+        "test": "uvu src test.mts",
+        "test:integration": "uvu integration integration-test.mts"
     },
     "dependencies": {
         "hamt_plus": "1.0.2",

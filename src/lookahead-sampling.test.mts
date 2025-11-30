@@ -2,14 +2,20 @@ import { suite } from "uvu";
 import * as assert from "uvu/assert";
 import hamt from "hamt_plus";
 
-import { Possibility } from "./data.mts";
-import { expandLevel, samplingWalkTree } from "./lookahead-sampling.mts";
+import { Possibility, type Distribution } from "./data.mts";
+import {
+    expandLevel,
+    sample,
+    samplingWalkTree,
+} from "./lookahead-sampling.mts";
 import {
     mapToDistribution,
     fullyResolvedApproximatelyEqual,
     probabilityMapsApproximatelyEqual,
     fullyResolvedDistToMap,
 } from "./test-utils.mts";
+import { flip, impossible, multiChain, result } from "./distributions.mts";
+import { explore } from "./inference.mts";
 
 const expandLevel_tests = suite("expandLevel");
 

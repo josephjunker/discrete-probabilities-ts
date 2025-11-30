@@ -1,6 +1,6 @@
 import { Possibility, type Distribution, type HashMapConfig } from "./data.mts";
 import { shallowNormalize } from "./utils.mts";
-import * as hamt from "hamt_plus";
+import hamt from "hamt_plus";
 
 type RandomSelectionResult<T> = {
     selected: T;
