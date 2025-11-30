@@ -6,6 +6,9 @@ export function explore<T>(
     choices: Distribution<T>,
     hashMapConfig?: HashMapConfig<T>,
 ): Distribution<T> {
+    if (maxDepth !== null && maxDepth < 1)
+        throw new Error("maxDepth must be at least 1");
+
     const suspensions = [] as Distribution<T>;
     let answers = hamt.make(hashMapConfig) as HamtMap<T, number>;
 
@@ -19,7 +22,7 @@ export function explore<T>(
                     );
                 },
                 thunk: (nodeProb, fn) => {
-                    if (!maxDepth || depth <= maxDepth) {
+                    if (!maxDepth || depth < maxDepth) {
                         // Walk the node if we should continue
                         walk(prob * nodeProb, depth + 1, fn());
                     } else {

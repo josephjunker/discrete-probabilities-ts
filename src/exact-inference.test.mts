@@ -70,7 +70,7 @@ explore_tests(
         );
 
         // Constant values 0 - 5
-        assert.equal(constants.length, 6);
+        assert.equal(constants.length, 5);
     },
 );
 

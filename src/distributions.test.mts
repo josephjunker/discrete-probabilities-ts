@@ -12,9 +12,9 @@ import {
     result,
 } from "./distributions.mts";
 
-const multiChain_tests = suite("chainRecord");
+const chainRecord_tests = suite("chainRecord");
 
-multiChain_tests("it should give the same value as nested chains", () => {
+chainRecord_tests("it should give the same value as nested chains", () => {
     const grassModel: Distribution<boolean> = chain(flip(0.3), (didRain) =>
         chain(flip(0.5), (sprinklerDidRun) =>
             chain(flip(0.9), (rainCausesWetGrass) =>
@@ -60,7 +60,7 @@ multiChain_tests("it should give the same value as nested chains", () => {
     assert.equal(explore(null, grassModel), explore(null, grassModel2));
 });
 
-multiChain_tests.run();
+chainRecord_tests.run();
 
 const binomial_tests = suite("binomial");
 
