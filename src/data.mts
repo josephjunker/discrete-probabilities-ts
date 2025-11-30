@@ -104,3 +104,8 @@ export type HashMapConfig<T> = {
     hash: (key: T) => number;
     keyEq: (a: T, b: T) => boolean;
 };
+
+export type WeightedValue<T> = {
+    probability: number;
+    value: T;
+};

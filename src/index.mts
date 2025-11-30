@@ -1,16 +1,24 @@
-export { Possibility, type HashMapConfig, type Distribution } from "./data.mts";
+export {
+    Possibility,
+    type HashMapConfig,
+    type Distribution,
+    type WeightedValue,
+} from "./data.mts";
+
+export { rejectionSampling } from "./rejection-sampling.mts";
+
+export { sample } from "./lookahead-sampling.mts";
 
 export {
-    sample,
-    rejectionSampling,
-    explore,
     exploreToEpsilon,
-    fullyResolveExact,
     fullyResolveSampling,
-    shallowNormalize,
+    fullyResolveExact,
     truncate,
-    type WeightedValue,
-} from "./inference.mts";
+} from "./wrappers.mts";
+
+export { shallowNormalize } from "./utils.mts";
+
+export { explore } from "./inference.mts";
 
 export {
     weightedChoice,

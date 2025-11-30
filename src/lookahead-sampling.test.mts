@@ -3,7 +3,7 @@ import * as assert from "uvu/assert";
 import hamt from "hamt_plus";
 
 import { Possibility } from "./data.mts";
-import { expandLevel, samplingWalkTree } from "./inference.mts";
+import { expandLevel, samplingWalkTree } from "./lookahead-sampling.mts";
 import {
     mapToDistribution,
     fullyResolvedApproximatelyEqual,
