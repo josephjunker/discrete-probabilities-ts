@@ -103,14 +103,34 @@ export function samplingWalkTree<T>(
     return samplingWalkTree(pcontrib * totalProb, expanded.samples, selected);
 }
 
+/**
+ * Perform approximate sampling over a {@link Distribution}, resulting in a flat distribution over the results.
+ * This is done via random sampling, using a tracing method which is significantly more accurate than naive
+ * rejection sampling.
+ *
+ * Building traces will result in full explorations of the distribution, meaning that this function
+ * will diverge when provided with infinite distributions.
+ *
+ * The result of this function will become more accurate with higher numbers of samples. This function
+ * is preferred when distributions are too large for {@link explore} to hold in memory. This function will
+ * be significantly slower than `explore` when called with high numbers of samples.
+ *
+ * It is often more efficient to partially explore a distribution by invoking `explore` with a low `maxDepth`
+ * before calling `sample` on the result.
+ *
+ * @param distribution
+ * @param nSamples
+ * @param [hashMapConfig] Optional configuration for a hash map. Only needed when the distribution
+ *      is over non-primitive values. See {@link HashMapConfig}
+ */
 export function sample<T>(
-    choices: Distribution<T>,
+    distribution: Distribution<T>,
     nSamples: number,
     hashMapConfig?: HashMapConfig<T>,
 ): Distribution<T> {
     let samples = hamt.make(hashMapConfig) as HamtMap<T, number>;
     for (let i = 0; i < nSamples; i++) {
-        samples = samplingWalkTree(1, samples, choices);
+        samples = samplingWalkTree(1, samples, distribution);
     }
 
     const resultTree = [] as Distribution<T>;

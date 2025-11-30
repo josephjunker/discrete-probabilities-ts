@@ -1,5 +1,8 @@
 import type { Distribution } from "./data.mts";
 
+/**
+ * Normalize the top level of a {@link Distribution} such that its probabilities add up to 1.
+ */
 export function shallowNormalize<T>(
     distribution: Distribution<T>,
 ): Distribution<T> {

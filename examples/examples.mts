@@ -6,7 +6,7 @@ import {
     chain,
     impossible,
     result,
-    multiChain,
+    chainRecord,
     type Distribution,
     fullyResolveExact,
     explore,
@@ -23,6 +23,30 @@ function show<T>(dist: Distribution<T>) {
         depth: null,
     });
 }
+
+const rollTwoModel = chain(roll(6), (firstRoll) =>
+    chain(roll(6), (secondRoll) => result(firstRoll + secondRoll)),
+);
+
+const rollTwoModel2: Distribution<number> = chain(roll(6), (firstRoll) =>
+    chain(roll(6), (secondRoll) => {
+        if (firstRoll === 5 || secondRoll === 5) return impossible();
+
+        return result(firstRoll + secondRoll);
+    }),
+);
+
+const rollTwoModel3 = chainRecord(
+    {
+        firstRoll: roll(6),
+        secondRoll: roll(6),
+    },
+    ({ firstRoll, secondRoll }) => result(firstRoll + secondRoll),
+);
+
+chain(roll(6), (rollResult) =>
+    rollResult === 5 ? impossible() : result(rollResult),
+);
 
 const grassModel: Distribution<boolean> = chain(flip(0.3), (didRain) =>
     chain(flip(0.5), (sprinklerDidRun) =>
@@ -42,7 +66,7 @@ const grassModel: Distribution<boolean> = chain(flip(0.3), (didRain) =>
     ),
 );
 
-const grassModel2 = multiChain(
+const grassModel2 = chainRecord(
     {
         didRain: flip(0.3),
         sprinklerDidRun: flip(0.5),
