@@ -1,5 +1,5 @@
 import type { Distribution, HashMapConfig, WeightedValue } from "./data.mts";
-import { explore } from "./inference.mts";
+import { explore } from "./exact-inference.mts";
 import { sample } from "./lookahead-sampling.mts";
 import { shallowNormalize } from "./utils.mts";
 

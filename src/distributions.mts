@@ -34,6 +34,16 @@ export function roll(sides: number): Distribution<number> {
     return weightedChoice(choices);
 }
 
+export function binomial(p: number): Distribution<number> {
+    function recursive(n: number): Distribution<number> {
+        return chain(flip(p), (isHeads) =>
+            isHeads ? recursive(n + 1) : result(n),
+        );
+    }
+
+    return recursive(0);
+}
+
 export function chain<TIn, TOut>(
     distribution: Distribution<TIn>,
     fn: (arg: TIn) => Distribution<TOut>,
@@ -51,7 +61,7 @@ type DistToDict<T extends Record<string, Distribution<unknown>>> = {
     [Name in keyof T]: T[Name] extends Distribution<infer Out> ? Out : never;
 };
 
-export function multiChain<
+export function chainRecord<
     Dists extends Record<string, Distribution<unknown>>,
     TOut,
 >(

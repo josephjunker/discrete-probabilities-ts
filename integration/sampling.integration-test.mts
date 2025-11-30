@@ -5,7 +5,7 @@ import {
     fullyResolveExact,
     fullyResolveSampling,
     impossible,
-    multiChain,
+    chainRecord,
     result,
     type Distribution,
 } from "../src/index.mts";
@@ -13,7 +13,7 @@ import {
 const sample_tests = suite("sample");
 
 sample_tests("it should produce approximately the correct value", () => {
-    const grassModel = multiChain(
+    const grassModel = chainRecord(
         {
             didRain: flip(0.3),
             sprinklerDidRun: flip(0.5),

@@ -18,15 +18,16 @@ export {
 
 export { shallowNormalize } from "./utils.mts";
 
-export { explore } from "./inference.mts";
+export { explore } from "./exact-inference.mts";
 
 export {
     weightedChoice,
     fairChoice,
     flip,
     roll,
+    binomial,
     impossible,
     result,
     chain,
-    multiChain,
+    chainRecord,
 } from "./distributions.mts";
