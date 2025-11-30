@@ -11,7 +11,6 @@ import {
     impossible,
     result,
 } from "./distributions.mts";
-import { exploreToEpsilon } from "./wrappers.mts";
 
 const multiChain_tests = suite("chainRecord");
 
