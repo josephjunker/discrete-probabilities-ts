@@ -52,16 +52,22 @@ export function probabilityMapsApproximatelyEqual<T>(
 
         if (!probability2) return false;
 
-        const smallerProbability = Math.min(probability1, probability2);
-        const epsilon = smallerProbability * 0.001;
-        const min = smallerProbability - epsilon;
-        const max = smallerProbability + epsilon;
-
-        const passes = (prob: number) => prob > min && prob < max;
-
-        if (!passes(probability1)) return false;
-        if (!passes(probability2)) return false;
+        if (!valuesApproximatelyEqual(probability1, probability2)) return false;
     }
+
+    return true;
+}
+
+export function valuesApproximatelyEqual(n1: number, n2: number): boolean {
+    const smallerNumber = Math.min(n1, n2);
+    const epsilon = smallerNumber * 0.001;
+    const min = smallerNumber - epsilon;
+    const max = smallerNumber + epsilon;
+
+    const passes = (prob: number) => prob > min && prob < max;
+
+    if (!passes(n1)) return false;
+    if (!passes(n2)) return false;
 
     return true;
 }

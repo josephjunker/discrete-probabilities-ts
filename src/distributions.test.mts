@@ -10,7 +10,10 @@ import {
     flip,
     impossible,
     result,
+    roll,
 } from "./distributions.mts";
+import { fullyResolveExact } from "./wrappers.mts";
+import { valuesApproximatelyEqual } from "./test-utils.mts";
 
 const chainRecord_tests = suite("chainRecord");
 
@@ -84,3 +87,52 @@ binomial_tests("it should produce the expected values", () => {
 });
 
 binomial_tests.run();
+
+const flip_tests = suite("flip");
+
+flip_tests("it should resolve to the given probabilities", () => {
+    function test(pTrue: number) {
+        const dist = flip(pTrue);
+        const odds = fullyResolveExact(dist);
+
+        const actualPTrue = odds.find(({ value }) => value)?.probability;
+        assert.ok(actualPTrue);
+        assert.ok(valuesApproximatelyEqual(pTrue, actualPTrue));
+    }
+
+    for (let i = 0.05; i < 1; i += 0.05) {
+        test(i);
+    }
+});
+
+flip_tests.run();
+
+const roll_tests = suite("roll");
+
+roll_tests("it should resolve to the given probabilities", () => {
+    function test(sides: number) {
+        const dist = roll(sides);
+        const odds = fullyResolveExact(dist);
+        const expectedProbability = 1 / sides;
+
+        assert.equal(odds.length, sides);
+
+        for (let i = 1; i <= sides; i++) {
+            const targetSide = odds.find(({ value }) => value === i);
+
+            assert.ok(targetSide);
+            assert.ok(
+                valuesApproximatelyEqual(
+                    targetSide.probability,
+                    expectedProbability,
+                ),
+            );
+        }
+    }
+
+    for (let i = 1; i < 100; i++) {
+        test(i);
+    }
+});
+
+roll_tests.run();
