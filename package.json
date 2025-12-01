@@ -9,25 +9,31 @@
     "private": true,
     "license": "MIT",
     "author": "Joseph Junker",
-    "main": "dist/cjs/index.js",
-    "module": "dist/mjs/index.js",
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
     "exports": {
-        ".": {
-            "import": "./dist/mjs/index.js",
-            "require": "./dist/cjs/index.js"
+        "import": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "require": {
+            "types": "./dist/index.d.cts",
+            "require": "./dist/index.cjs"
         }
     },
     "scripts": {
+        "build": "tsup",
         "test": "uvu src test.mts",
         "test:integration": "uvu integration integration-test.mts"
     },
     "dependencies": {
-        "hamt_plus": "1.0.2",
-        "pure-rand": "^7.0.1"
+        "hamt_plus": "1.0.2"
     },
     "devDependencies": {
         "@types/hamt_plus": "1.0.0",
         "prettier": "3.6.2",
+        "tsup": "^8.5.1",
         "typescript": "5.9.3",
         "uvu": "^0.5.6"
     }

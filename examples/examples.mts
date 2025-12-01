@@ -1,4 +1,3 @@
-import hamt from "hamt_plus";
 import {
     fairChoice,
     flip,
@@ -11,11 +10,9 @@ import {
     fullyResolveExact,
     explore,
     exploreToEpsilon,
-    truncate,
     type HashMapConfig,
     type WeightedValue,
     fullyResolveSampling,
-    sample,
 } from "../src/index.mts";
 
 function show<T>(dist: Distribution<T>) {

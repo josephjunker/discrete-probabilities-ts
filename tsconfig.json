@@ -1,8 +1,17 @@
 {
-    "extends": "./tsconfig-base.json",
     "compilerOptions": {
+        "noEmit": true,
+
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+
         "module": "nodenext",
-        "outDir": "dist/mjs",
-        "target": "esnext"
+        "rewriteRelativeImportExtensions": true,
+
+        "strict": true,
+        "isolatedModules": true,
+        "noUncheckedSideEffectImports": true,
+        "moduleDetection": "auto",
+        "skipLibCheck": true
     }
 }
