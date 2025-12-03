@@ -76,7 +76,7 @@ export function exploreToEpsilon<T>(
  * to accept, and then pass the result to `truncate` in order to drop the unexplored portion.
  */
 export function truncate<T>(distribution: Distribution<T>): {
-    values: Array<WeightedValue<T>>;
+    truncated: Distribution<T>;
     truncationError: number;
 } {
     const normalized = shallowNormalize(distribution);
@@ -90,15 +90,7 @@ export function truncate<T>(distribution: Distribution<T>): {
     );
 
     return {
-        values: constants.map((possibility) =>
-            possibility.match({
-                constant: (probability, value) => ({ probability, value }),
-                thunk: () => {
-                    // Impossible because of `filter` above
-                    throw new Error("TILT");
-                },
-            }),
-        ),
+        truncated: constants,
         truncationError: thunks.reduce(
             (acc, { probability }) => acc + probability,
             0,

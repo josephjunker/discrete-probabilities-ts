@@ -26,6 +26,10 @@ It would be nice to have some utilities for demonstrating and viewing the output
 
 - Some sort of histogram viewer for final probabilities. I'd prefer to not add additional dependencies for this.
 
+### Recursion schemes
+
+As can be seen in the [infinite distribution example](./examples/infinite-distributions.mts), doing sampling repeatedly involves writing sometimes tricky recursive code. This could probably be improved by providing proper fold/unfold functions. There is a design space to explore here.
+
 ### Tooling
 
 I used `tsup` for this project before I realized it was deprecated. I would like to switch to `esbuild`.

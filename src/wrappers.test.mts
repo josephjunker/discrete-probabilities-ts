@@ -2,15 +2,7 @@ import { suite } from "uvu";
 import * as assert from "uvu/assert";
 
 import { explore } from "./exact-inference.mts";
-import { type Distribution } from "./data.mts";
-import {
-    binomial,
-    chain,
-    chainRecord,
-    flip,
-    impossible,
-    result,
-} from "./distributions.mts";
+import { binomial } from "./distributions.mts";
 import { exploreToEpsilon, truncate } from "./wrappers.mts";
 
 const exploreToEpsilon_tests = suite("exploreToEpsilon");
