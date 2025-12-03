@@ -44,9 +44,7 @@ This package is statically typed and exports `.d.ts` files. Use of TypeScript's 
 
 The core functionality of this library is based on a research paper:
 
-```
-Kiselyov, Oleg & Shan, Chung-chieh. (2009). Embedded Probabilistic Programming. 360-384. 10.1007/978-3-642-03034-5_17.
-```
+> Kiselyov, Oleg & Shan, Chung-chieh. (2009). Embedded Probabilistic Programming. 360-384. 10.1007/978-3-642-03034-5_17.
 
 ## Contributing
 
