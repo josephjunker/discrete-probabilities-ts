@@ -18,6 +18,14 @@ Examples using cards and dice are fine, but please do not submit examples based 
 
 There are a large number of potentially interesting probability distributions out there, and this project only supports a couple of them. More distributions would open up more possible usages.
 
+### Utility functions
+
+It would be nice to have some utilities for demonstrating and viewing the output of inference.
+
+- Statistical functions for checking the variance of sampling, to ensure that it is converging on reliable results.
+
+- Some sort of histogram viewer for final probabilities. I'd prefer to not add additional dependencies for this.
+
 ### Tooling
 
 I used `tsup` for this project before I realized it was deprecated. I would like to switch to `esbuild`.
