@@ -167,7 +167,7 @@ export type HashMapConfig<T> = {
      * are unequivalent.
      * @returns
      */
-    keyEq: (a: T, b: T) => boolean;
+    equals: (a: T, b: T) => boolean;
 };
 
 /**

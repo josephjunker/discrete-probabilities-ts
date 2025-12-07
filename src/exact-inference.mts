@@ -30,7 +30,12 @@ export function explore<T>(
         throw new Error("maxDepth must be at least 1");
 
     const suspensions = [] as Distribution<T>;
-    let answers = hamt.make(hashMapConfig) as HamtMap<T, number>;
+    let answers = hamt.make(
+        hashMapConfig && {
+            hash: hashMapConfig.hash,
+            keyEq: hashMapConfig.equals,
+        },
+    ) as HamtMap<T, number>;
 
     function walk(prob: number, depth: number, choices: Distribution<T>): void {
         for (const choice of choices) {

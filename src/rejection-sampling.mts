@@ -1,6 +1,6 @@
 import type { Distribution, HashMapConfig } from "./data.mts";
 import { Possibility } from "./data.mts";
-import * as hamt from "hamt_plus";
+import hamt from "hamt_plus";
 
 /**
  * Naive sampling of a distribution. This algorithm is highly inaccurate when handling very unlikely
@@ -17,7 +17,12 @@ export function rejectionSampling<T>(
     nSamples: number,
     hashMapConfig?: HashMapConfig<T>,
 ): Distribution<T> {
-    let samples = hamt.make(hashMapConfig) as HamtMap<T, number>;
+    let samples = hamt.make(
+        hashMapConfig && {
+            hash: hashMapConfig.hash,
+            keyEq: hashMapConfig.equals,
+        },
+    ) as HamtMap<T, number>;
 
     for (let i = 0; i < nSamples; i++) {
         let currentNode = shallowRandomChoice(distribution);
@@ -29,6 +34,7 @@ export function rejectionSampling<T>(
                         value,
                         (current) => (current || 0) + 1,
                     );
+                    currentNode = null;
                 },
                 thunk: (_, fn) => {
                     currentNode = shallowRandomChoice(fn());

@@ -128,7 +128,12 @@ export function sample<T>(
     nSamples: number,
     hashMapConfig?: HashMapConfig<T>,
 ): Distribution<T> {
-    let samples = hamt.make(hashMapConfig) as HamtMap<T, number>;
+    let samples = hamt.make(
+        hashMapConfig && {
+            hash: hashMapConfig.hash,
+            keyEq: hashMapConfig.equals,
+        },
+    ) as HamtMap<T, number>;
     for (let i = 0; i < nSamples; i++) {
         samples = samplingWalkTree(1, samples, distribution);
     }
