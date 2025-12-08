@@ -21,6 +21,7 @@ export { shallowNormalize } from "./utils.mts";
 export { explore } from "./exact-inference.mts";
 
 export {
+    type Choices,
     weightedChoice,
     fairChoice,
     flip,

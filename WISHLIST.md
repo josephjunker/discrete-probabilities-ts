@@ -48,6 +48,8 @@ I used `tsup` for this project before I realized it was deprecated. I would like
 
 I would like to use eslint. The lint settings should be as strict as possible while not alerting on existing patterns within the codebase.
 
+It would be very nice to generate documentation pages from the docstrings in the codebase. I know this is tractable, I just haven't spent the time to set it up.
+
 ### Performance improvements
 
 Zero work has gone into sampling performance. There's probably a ton of room for improvement. An immutable hashmap is used as the basic data structure; this could probably be made more efficient using a mutable one (though it would have to properly support custom hashing and equality operators.)
