@@ -4,9 +4,9 @@
     "description": "Utilities for discrete probabilistic programming",
     "keywords": [
         "probability",
-        "probabilistic"
+        "probabilistic",
+        "HANSEI"
     ],
-    "private": true,
     "license": "MIT",
     "author": "Joseph Junker",
     "type": "module",
