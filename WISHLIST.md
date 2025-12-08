@@ -53,3 +53,7 @@ I would like to use eslint. The lint settings should be as strict as possible wh
 Zero work has gone into sampling performance. There's probably a ton of room for improvement. An immutable hashmap is used as the basic data structure; this could probably be made more efficient using a mutable one (though it would have to properly support custom hashing and equality operators.)
 
 The best way to improve performance, I think, would be to keep the existing implementation as a reference, define optimized versions of the various operations, and then test that the two always return equivalent results. `fast-check` will help here, but writing tests for sampling functions (which rely on randomness) will be hard.
+
+### Type Safety
+
+It could be beneficial to make inference functions statically reject non-primitive models if they aren't given a hashmap config. I'm sure this could be done with fancy conditional types, but I'd rather have one set of functions for reference types and one for value types.
