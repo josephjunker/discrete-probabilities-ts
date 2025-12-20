@@ -36,5 +36,9 @@
         "tsup": "^8.5.1",
         "typescript": "5.9.3",
         "uvu": "^0.5.6"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/josephjunker/discrete-probabilities-ts"
     }
 }
